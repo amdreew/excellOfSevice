@@ -25,7 +25,9 @@ export class InventarioService {
 
 export interface inventario {
   codigo_producto: string;
-  nobre_producto: string;
+  nobre_producto: string;  
+  codigo_clasificacion: string;
+  nombre_clasificacion: string;
   precio: number;
   fecha_entrada: Date;
 }

@@ -47,7 +47,9 @@ export class AppComponent {
             this.inventario_expor.push(
               {
                 codigo_producto: result.codigo_producto,
-                nobre_producto: result.nobre_producto,
+                nobre_producto: result.nobre_producto,                
+                codigo_clasificacion: result.codigo_clasificacion,
+                nombre_clasificacion: result.nombre_clasificacion,
                 precio: result.precio,
                 fecha_entrada: result.fecha_entrada
               }
@@ -79,9 +81,10 @@ export class AppComponent {
               if(result.fecha_entrada <= fecha){
                 this.removeItemFromArr(c);
                 res = true;                
-              }else{                
+              }else if(result.fecha_entrada === null ){
+                res = true;              
+              } else {
                 res = false;
-                
               }
             } else {              
               res = true;
