@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ExcelServiService } from './services/excel-servi.service'
-import { InventarioService, inventario } from './services/inventario.service'
+import { ExcelServiService } from './services/excel-servi.service';
+import { InventarioService, inventario } from './services/inventario.service';
 import { from } from 'rxjs';
 
 @Component({
@@ -11,7 +11,8 @@ import { from } from 'rxjs';
 export class AppComponent {
 
   inve: inventario[];
-  inventario_expor:any = [];
+  // tslint:disable-next-line:variable-name
+  inventario_expor: any = [];
   data: any = [{
     eid: 'e101',
     ename: 'ravi',
@@ -26,28 +27,28 @@ export class AppComponent {
     esal: 3000
     }];
 
-    constructor(private excelService:ExcelServiService, private serviInventario:InventarioService){
+    constructor(private excelService: ExcelServiService, private serviInventario: InventarioService) {
     }
 
-    getInventari():void{
+    getInventari(): void {
       this.serviInventario.getInventario().subscribe(
         res => {
           this.inve = res;
-          console.log('inventario cargado');  
+          console.log('inventario cargado');
         });
     }
-    limpiarInventario():void {
-      if(this.inve != null ){
+    limpiarInventario(): void {
+      if(this.inve != null ) {
         let c = 0;
-        for(let result of this.inve){
-          let codigo = result.codigo_producto;  
-          let fecha = result.fecha_entrada;
-          let verificar = this.verificarExistencia(codigo, fecha);       
-          if( verificar){            
+        for (const result of this.inve) {
+          const codigo = result.codigo_producto;
+          const fecha = result.fecha_entrada;
+          const verificar = this.verificarExistencia(codigo, fecha);
+          if ( verificar) {
             this.inventario_expor.push(
               {
                 codigo_producto: result.codigo_producto,
-                nobre_producto: result.nobre_producto,                
+                nobre_producto: result.nobre_producto,
                 codigo_clasificacion: result.codigo_clasificacion,
                 nombre_clasificacion: result.nombre_clasificacion,
                 precio: result.precio,
@@ -55,57 +56,57 @@ export class AppComponent {
               }
             );
           }
-          c++; 
+          c++;
         }
         alert('inventario listo para generar reporte');
         console.log('depuracion terminada');
-      }else{
-        alert('no se ha cargado el inventario')
+      } else {
+        alert('no se ha cargado el inventario');
       }
     }
 
-    removeItemFromArr (i:number ) {   
+    removeItemFromArr(i: number ) {
       if ( i !== -1 ) {
           this.inventario_expor.splice( i, 1 );
-          console.log('eliminado elemento en la posicion'+ i);
+          console.log('eliminado elemento en la posicion' + i);
       }
   }
-   
-    verificarExistencia(codigo:string, fecha:Date):boolean{
-      var res = true;      
-      if(this.inventario_expor != undefined){        
-        if(this.inventario_expor.length > 0){
+
+    verificarExistencia(codigo: string, fecha: Date): boolean {
+      let res = true;
+      if (this.inventario_expor !== undefined) {
+        if (this.inventario_expor.length > 0) {
           let c = 0;
-          for(let result of this.inventario_expor){            
-            if(result.codigo_producto === codigo){
-              if(result.fecha_entrada <= fecha){
+          for (const result of this.inventario_expor) {
+            if(result.codigo_producto === codigo) {
+              if(result.fecha_entrada <= fecha) {
                 this.removeItemFromArr(c);
-                res = true;                
-              }else if(result.fecha_entrada === null ){
-                res = true;              
+                res = true;
+              } else if (result.fecha_entrada === null ) {
+                res = true;
               } else {
                 res = false;
               }
-            } else {              
+            } else {
               res = true;
-              
+
             }
             c++;
-          }        
-        }else {
-          res = true;          
+          }
+        } else {
+          res = true;
         }
-      } 
-      return res;     
+      }
+      return res;
     }
 
-    generarReporte():void{
+    generarReporte(): void {
      this.excelService.exportAsExcelFile(this.inventario_expor, 'inventario');
-     console.log(this.inventario_expor)
+     console.log(this.inventario_expor);
      console.log(this.inve);
     }
 
-    export():void {
+    export(): void {
       this.excelService.exportAsExcelFile(this.data, 'nombre');
     }
 }

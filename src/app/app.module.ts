@@ -4,10 +4,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { InventarioService } from './services/inventario.service'
 import { from } from 'rxjs';
+import { AtencionesComponent } from './components/atenciones/atenciones.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AtencionesComponent
   ],
   imports: [
     BrowserModule,
