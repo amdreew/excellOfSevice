@@ -5,11 +5,13 @@ import { AppComponent } from './app.component';
 import { InventarioService } from './services/inventario.service'
 import { from } from 'rxjs';
 import { AtencionesComponent } from './components/atenciones/atenciones.component';
+import { VacunasComponent } from './components/vacunas/vacunas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AtencionesComponent
+    AtencionesComponent,
+    VacunasComponent
   ],
   imports: [
     BrowserModule,

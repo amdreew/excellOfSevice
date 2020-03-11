@@ -8,8 +8,23 @@ import {Observable, of, from } from 'rxjs';
 })
 export class FacturasService {
 
-  uri = 'http://127.0.0.1:3000/';
+  uri = 'http://127.0.0.1:3000/api/admisiones/';
   constructor(private http: HttpClient) { }
+
+  getCentros(): Observable<centros[]> {
+    const url = `${this.uri}centros`;
+    return this.http.get<centros[]>(url);
+  }
+
+  getAtenciones(codigo: string): Observable<Atenciones[]> {
+    const url = `http://127.0.0.1:3000/api/admisiones/atenciones/${codigo}`;
+    return this.http.get<Atenciones[]>(url);
+  }
+
+  getVacunasCentros(codigo: string): Observable<Vacunas[]> {
+    const url = `http://127.0.0.1:3000/api/admisiones/vacunas/${codigo}`;
+    return this.http.get<Vacunas[]>(url);
+  }
 
   getFacturas(): Observable<factura[]> {
     const url = `${this.uri}factucentro`;
@@ -18,7 +33,7 @@ export class FacturasService {
     );
   }
 
-  getCentros(): Observable<centros[]> {
+  getCents(): Observable<centros[]> {
     const url = `${this.uri}centros`;
     return this.http.get<centros[]>(url).pipe(
       map((res) => res as centros[])
@@ -47,4 +62,24 @@ export interface factura {
 
 export interface nuser {
   nombre:string;
+}
+
+export interface Atenciones {
+  nro_identificacion: string;
+  via_ingreso: string;
+  nombre: string;
+  diagnostico: string;
+  edad: string;
+  centro: string;
+  eps: string;
+}
+
+export interface Vacunas {
+  usuario: string;
+  centro: string;
+  codigo_centro: string;
+  docis: string;
+  vacuna: string;
+  codigo_procedimiento: string;
+  paciente: string;
 }
